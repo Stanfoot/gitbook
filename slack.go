@@ -2,11 +2,10 @@ package gitbook
 
 import (
 	"github.com/nlopes/slack"
-	"github.com/revel/revel"
 )
 
 // Post file to Slack
-func (b Book) SendSlack() {
+func (b Book) SendSlack() error {
 	api := slack.New(b.Slack.Token)
 
 	param := slack.FileUploadParameters{
@@ -16,12 +15,12 @@ func (b Book) SendSlack() {
 		InitialComment: b.Slack.Message,
 	}
 
-	file, err := api.UploadFile(param)
+	_, err := api.UploadFile(param)
 	if err != nil {
-		revel.ERROR.Println(err.Error())
+		return err
 	}
 
-	revel.INFO.Println(file.URLPrivate)
+	return nil
 }
 
 // Slack Message

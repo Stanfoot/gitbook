@@ -7,14 +7,21 @@ import (
 	"os/exec"
 )
 
-func New(repo string, user string, extension string) Book {
-	return Book{
-		UserName:     user,
-		Repo:         repo,
-		RepoPath:     repoPath(),
-		OutputFolder: outputFile(repo, ""),
-		OutputFile:   outputFile(repo, extension),
-	}
+func New(repo string, userName string, extension string, basePath string) *Book {
+	book := &Book{}
+	book.BasePath = basePath
+	book.Repo = repo
+	book.RepoPath = book.repoPath()
+	book.OutputFolder = book.outputFile(repo, "")
+	book.OutputFile = book.outputFile(repo, extension)
+	book.UserName = userName
+
+	return book
+}
+
+func (b *Book) Github(token string) *Book {
+	b.GithubToken = token
+	return b
 }
 
 // Clone GitBook source from Github

@@ -2,21 +2,20 @@ package gitbook
 
 import (
 	"fmt"
-	"github.com/revel/revel"
 	"strings"
 	"time"
 )
 
-func tmpPath(addPath string) string {
-	return revel.Config.StringDefault("repo.path", "") + addPath
+func (b Book) temporaryPath(addPath string) string {
+	return b.BasePath + addPath
 }
 
-func repoPath() string {
-	return tmpPath(fmt.Sprintf("%v", time.Now().Unix()))
+func (b Book) repoPath() string {
+	return b.temporaryPath(fmt.Sprintf("%v", time.Now().Unix()))
 }
 
-func outputFile(repo string, extension string) string {
-	return tmpPath(trimRepoOwner(repo) + extension)
+func (b Book) outputFile(repo string, extension string) string {
+	return b.temporaryPath(trimRepoOwner(repo) + extension)
 }
 
 func trimRepoOwner(repo string) string {

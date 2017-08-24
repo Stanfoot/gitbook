@@ -1,6 +1,8 @@
 package gitbook
 
 type Book struct {
+	BasePath     string
+	GithubToken  string
 	UserName     string
 	Repo         string
 	RepoPath     string
