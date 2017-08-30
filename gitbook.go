@@ -67,8 +67,8 @@ func (b Book) GeneratePdf() error {
 }
 
 // Exec gitbook command
-func (b Book) Build(format string) error {
-	_, err := exec.Command("gitbook", "build", "--format "+format, b.RepoPath, b.OutputFolder).Output()
+func (b Book) Build() error {
+	_, err := exec.Command("gitbook", "build", b.RepoPath, b.OutputFolder).Output()
 	if err != nil {
 		return err
 	}
